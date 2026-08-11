@@ -47,7 +47,7 @@ export function Nav() {
           // The mark carries the identity alone here, so the link needs an
           // explicit name — there is no longer any text to supply one.
           aria-label="LBC Innovation — back to top"
-          className="flex items-center"
+          className="flex items-center gap-2.5"
           onClick={() => setMenuOpen(false)}
         >
           <Image
@@ -56,8 +56,13 @@ export function Nav() {
             width={512}
             height={512}
             priority
-            className="size-[1.8375rem] sm:size-[2.1rem]"
+            className="size-10 sm:size-11"
           />
+          {/* The mark supplies the "LBC"; this completes the lockup. Tracking
+              and case mirror the wordmark in the source logo. */}
+          <span className="text-[11px] uppercase tracking-[0.3em] text-ink sm:text-[13px]">
+            Innovation
+          </span>
         </a>
 
         <div className="hidden items-center gap-1 md:flex">
