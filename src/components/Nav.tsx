@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
 import { ThemeToggle } from "./ThemeToggle";
@@ -18,15 +17,21 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // The logo opens large and settles to a compact lockup once scrolling starts.
-  // Menu-open forces the compact state so a tall header cannot crowd the sheet.
+  // Drives the bar's own chrome only; the logo's travel is handled by
+  // <BrandLockup />, which reads scroll position directly.
   const compact = scrolled || menuOpen;
 
   // The mobile sheet covers the page, so the body behind it must not scroll.
+  // The flag additionally tells <BrandLockup /> to dock: it is fixed and sits
+  // above the header, so at the top of the page the full-size logo would
+  // otherwise render on top of the open sheet's links.
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.documentElement.dataset.menuOpen = String(menuOpen);
+    window.dispatchEvent(new Event("brand:refresh"));
     return () => {
       document.body.style.overflow = "";
+      delete document.documentElement.dataset.menuOpen;
     };
   }, [menuOpen]);
 
@@ -47,40 +52,15 @@ export function Nav() {
           : "border-b border-transparent"
       }`}
     >
-      <nav
-        className={`mx-auto flex max-w-6xl items-center justify-between px-5 transition-[height] duration-300 ease-out sm:px-8 ${
-          compact ? "h-16 sm:h-20" : "h-20 sm:h-28"
-        }`}
-      >
-        <a
-          href="#top"
-          // The mark carries the identity alone here, so the link needs an
-          // explicit name — there is no longer any text to supply one.
-          aria-label="LBC Innovation — back to top"
-          className="flex items-center gap-2.5"
-          onClick={() => setMenuOpen(false)}
-        >
-          <Image
-            src="/logo/lbci-mark.png"
-            alt=""
-            width={512}
-            height={512}
-            priority
-            className={`transition-[width,height] duration-300 ease-out ${
-              compact ? "size-9 sm:size-10" : "size-12 sm:size-[4.25rem]"
-            }`}
-          />
-          {/* The mark supplies the "LBC"; this completes the lockup. Tracking
-              is in em, so it scales with the type rather than needing its own
-              step. Case mirrors the wordmark in the source logo. */}
-          <span
-            className={`uppercase tracking-[0.3em] text-ink transition-[font-size] duration-300 ease-out ${
-              compact ? "text-[10px] sm:text-xs" : "text-[13px] sm:text-[17px]"
-            }`}
-          >
-            Innovation
-          </span>
-        </a>
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:h-20 sm:px-8">
+        {/* The logo itself is <BrandLockup />, which is fixed and overlays this
+            spot so it can travel here from the hero. This reserves its space
+            and is the measurement target for where it lands. */}
+        <div
+          id="brand-slot-nav"
+          aria-hidden="true"
+          className="h-11 w-[7.5rem] sm:h-12 sm:w-[10rem]"
+        />
 
         <div className="hidden items-center gap-1 md:flex">
           {site.nav.map((item) => (

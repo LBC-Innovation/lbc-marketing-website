@@ -1,5 +1,6 @@
 import { About } from "@/components/About";
 import { Approach } from "@/components/Approach";
+import { BrandLockup } from "@/components/BrandLockup";
 import { Contact } from "@/components/Contact";
 import { Currently } from "@/components/Currently";
 import { Footer } from "@/components/Footer";
@@ -36,6 +37,9 @@ export default function Home() {
   return (
     <>
       <Nav />
+      {/* Sits outside <Nav> and <main>: position:fixed would be trapped by the
+          header's backdrop-filter, which creates a containing block. */}
+      <BrandLockup />
       <main>
         <Hero />
         <Services />

@@ -157,6 +157,31 @@
   }
 }
 
+/* Pre-hydration resting position for <BrandLockup />. Mirrors the hero's top
+   padding (pt-32 / sm:pt-44 / lg:pt-52) so the logo paints in the right place
+   before its effect runs and replaces this with measured values. */
+:root {
+  --brand-hero-y: 8rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --brand-hero-y: 11rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --brand-hero-y: 13rem;
+  }
+}
+
+/* Applied only while <BrandLockup /> is snapping between resting places, never
+   during scroll-driven frames — easing those would make the logo lag the page. */
+.brand-eased {
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* ---------------------------------------------------------------------------
    Hero backdrop
    --------------------------------------------------------------------------- */

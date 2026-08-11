@@ -7,7 +7,13 @@ export function Hero() {
       <HeroBackdrop />
 
       <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-32 sm:px-8 sm:pb-28 sm:pt-44 lg:pb-36 lg:pt-52">
-        <p className="eyebrow">{site.legalName}</p>
+        {/* Reserves the space <BrandLockup /> occupies at rest, and is the
+            measurement target it starts from. */}
+        <div
+          id="brand-slot-hero"
+          aria-hidden="true"
+          className="h-20 sm:h-24 lg:h-28"
+        />
 
         <h1 className="mt-7 max-w-4xl text-[clamp(2.6rem,8.5vw,5.75rem)] font-semibold leading-[0.94] tracking-[-0.04em]">
           AI woven in.
