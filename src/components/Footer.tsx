@@ -8,7 +8,9 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-edge bg-sunken">
+    // Plain, because Contact above it is sunken — two sunken blocks in a row
+    // would merge into one and lose the boundary between them.
+    <footer className="border-t border-edge">
       <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
           <div>

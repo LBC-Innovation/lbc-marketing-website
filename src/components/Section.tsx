@@ -3,6 +3,12 @@ import { Reveal } from "./Reveal";
 
 /**
  * Shared section chrome: consistent rhythm, eyebrow label, and heading scale.
+ *
+ * `tone` owns the banding. It used to be a wrapper each caller added by hand,
+ * which made the alternation invisible until you read every section file and
+ * easy to break when one was removed. Bands must alternate — two adjacent
+ * sunken blocks merge into one, and so do a sunken section and the footer.
+ * The running order is in page.tsx.
  */
 export function Section({
   id,
@@ -10,6 +16,7 @@ export function Section({
   title,
   lede,
   children,
+  tone = "plain",
   className = "",
 }: {
   id: string;
@@ -17,9 +24,10 @@ export function Section({
   title: ReactNode;
   lede?: ReactNode;
   children: ReactNode;
+  tone?: "plain" | "sunken";
   className?: string;
 }) {
-  return (
+  const body = (
     <section
       id={id}
       // Keep in step with the hero's pb-*: together they set the gap between
@@ -42,4 +50,9 @@ export function Section({
       <div className="mt-12 sm:mt-16">{children}</div>
     </section>
   );
+
+  if (tone === "sunken") {
+    return <div className="border-y border-edge bg-sunken">{body}</div>;
+  }
+  return body;
 }

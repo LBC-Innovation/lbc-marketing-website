@@ -8,6 +8,7 @@ export function Contact() {
     <Section
       id="contact"
       eyebrow="Contact"
+      tone="sunken"
       title="Start a conversation."
       lede="Two doors, depending on how formed the idea is. Neither one obligates you to anything."
     >

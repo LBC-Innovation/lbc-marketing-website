@@ -39,6 +39,8 @@ export default function Home() {
       {/* Sits outside <Nav> and <main>: position:fixed would be trapped by the
           header's backdrop-filter, which creates a containing block. */}
       <BrandLockup />
+      {/* Section banding alternates, and has to: adjacent sunken blocks merge.
+          plain — plain — sunken — plain — sunken — plain(footer) */}
       <main>
         <Hero />
         <Services />
