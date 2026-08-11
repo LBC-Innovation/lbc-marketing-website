@@ -157,6 +157,97 @@
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Hero backdrop
+   --------------------------------------------------------------------------- */
+
+/* Both loops start and end on the same transform, so the reduced-motion rule
+   below (which snaps animations to their end state) leaves them exactly where
+   they began rather than parked somewhere odd. */
+@keyframes hero-drift-a {
+  0%,
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
+  50% {
+    transform: translate(-46%, 3rem) scale(1.08);
+  }
+}
+
+@keyframes hero-drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-4rem, 2.5rem) scale(1.12);
+  }
+}
+
+.hero-drift-a {
+  animation: hero-drift-a 38s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-drift-b {
+  animation: hero-drift-b 31s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* The hero clips its overflow, which would otherwise slice the arc field and
+   the warm tint off with a hard horizontal edge at the section boundary.
+   Fading the whole backdrop dissolves every layer at once. */
+.hero-backdrop {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 38%,
+    rgba(0, 0, 0, 0.62) 64%,
+    rgba(0, 0, 0, 0.24) 84%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 38%,
+    rgba(0, 0, 0, 0.62) 64%,
+    rgba(0, 0, 0, 0.24) 84%,
+    transparent 100%
+  );
+}
+
+/* On narrow screens the arc field sits behind the copy rather than beside it,
+   so it drops back to a faint texture. Set here instead of via responsive
+   Tailwind variants to keep the light/dark and breakpoint ordering explicit. */
+.hero-arcs {
+  opacity: 0.2;
+}
+
+[data-theme="dark"] .hero-arcs {
+  opacity: 0.3;
+}
+
+@media (min-width: 640px) {
+  .hero-arcs {
+    opacity: 0.5;
+  }
+
+  [data-theme="dark"] .hero-arcs {
+    opacity: 0.65;
+  }
+}
+
+/* Fine noise over the gradients. Large soft gradients band on 8-bit displays;
+   this breaks up the steps. Inlined so it costs no request. */
+.hero-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.055;
+  mix-blend-mode: multiply;
+}
+
+[data-theme="dark"] .hero-grain {
+  opacity: 0.09;
+  mix-blend-mode: screen;
+}
+
 /* Scroll reveal. Content is visible by default and only hidden once the
    observer confirms JS is running, so no-JS and reduced-motion users see
    everything immediately. */

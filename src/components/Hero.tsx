@@ -1,13 +1,10 @@
+import { HeroBackdrop } from "./HeroBackdrop";
 import { site } from "@/lib/site";
 
 export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
-      {/* Ambient warm glow. Purely decorative and pointer-transparent. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-[28rem] left-1/2 h-[46rem] w-[70rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(245,162,107,0.28),rgba(236,113,134,0.16),transparent)] blur-3xl dark:opacity-70" />
-        <div className="absolute -right-40 top-40 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(closest-side,rgba(236,113,134,0.20),transparent)] blur-3xl" />
-      </div>
+      <HeroBackdrop />
 
       <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-32 sm:px-8 sm:pb-28 sm:pt-44 lg:pb-36 lg:pt-52">
         <p className="eyebrow">{site.legalName}</p>
