@@ -17,15 +17,15 @@ export function Footer() {
             <Image
               src="/logo/lbci-logo.png"
               alt={`${site.name} logo`}
-              width={1014}
-              height={749}
+              width={1019}
+              height={758}
               className="h-24 w-auto dark:hidden"
             />
             <Image
               src="/logo/lbci-logo-dark.png"
               alt={`${site.name} logo`}
-              width={1014}
-              height={749}
+              width={1019}
+              height={758}
               className="hidden h-24 w-auto dark:block"
             />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted">

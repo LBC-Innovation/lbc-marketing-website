@@ -99,12 +99,27 @@ light.
 | Output | Notes |
 | --- | --- |
 | `public/logo/lbci-logo.png` | Light theme, trimmed |
-| `public/logo/lbci-logo-dark.png` | Plum wordmark recolored to bone — it is invisible on dark otherwise |
+| `public/logo/lbci-logo-dark.png` | Wordmark recolored to bone — plum is invisible on dark |
 | `public/logo/lbci-mark.png` | Mark alone, used in the nav where the wordmark would be too small to read |
 | `src/app/icon.png`, `src/app/apple-icon.png` | Favicons |
 | `public/brand/og.png` | 1200×630 social card |
 
-Re-run it after replacing the source logo.
+**Re-run it after replacing the source logo** — nothing else reads `logo/`
+at build time, so stale derived assets will not fail the build.
+
+Two things the script does beyond resizing, both of which matter if you edit
+the logo again:
+
+- The counters of the **O** and the **A** in the wordmark are filled with
+  opaque white rather than being transparent. Left alone they show as light
+  blobs on the dark theme and on the footer's tinted panel. The script rebuilds
+  the wordmark as ink-on-transparent — luminance becomes alpha — which fixes
+  the counters and recolors for dark in one pass, with clean edges instead of
+  a pale fringe.
+- The boundary between mark and wordmark is **measured**, not hardcoded: it
+  classifies rows as coral or plum and splits through the gap. If a future logo
+  makes that split impossible, the script throws with the measured rows rather
+  than silently producing a cropped mark.
 
 ---
 

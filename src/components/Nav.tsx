@@ -9,12 +9,18 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Far enough down that the shrink reads as deliberate rather than twitching
+  // on the first few pixels of scroll.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // The logo opens large and settles to a compact lockup once scrolling starts.
+  // Menu-open forces the compact state so a tall header cannot crowd the sheet.
+  const compact = scrolled || menuOpen;
 
   // The mobile sheet covers the page, so the body behind it must not scroll.
   useEffect(() => {
@@ -36,12 +42,16 @@ export function Nav() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || menuOpen
+        compact
           ? "border-b border-edge bg-bg/85 backdrop-blur-xl"
           : "border-b border-transparent"
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:h-20 sm:px-8">
+      <nav
+        className={`mx-auto flex max-w-6xl items-center justify-between px-5 transition-[height] duration-300 ease-out sm:px-8 ${
+          compact ? "h-16 sm:h-20" : "h-20 sm:h-28"
+        }`}
+      >
         <a
           href="#top"
           // The mark carries the identity alone here, so the link needs an
@@ -56,11 +66,18 @@ export function Nav() {
             width={512}
             height={512}
             priority
-            className="size-10 sm:size-11"
+            className={`transition-[width,height] duration-300 ease-out ${
+              compact ? "size-9 sm:size-10" : "size-12 sm:size-[4.25rem]"
+            }`}
           />
           {/* The mark supplies the "LBC"; this completes the lockup. Tracking
-              and case mirror the wordmark in the source logo. */}
-          <span className="text-[11px] uppercase tracking-[0.3em] text-ink sm:text-[13px]">
+              is in em, so it scales with the type rather than needing its own
+              step. Case mirrors the wordmark in the source logo. */}
+          <span
+            className={`uppercase tracking-[0.3em] text-ink transition-[font-size] duration-300 ease-out ${
+              compact ? "text-[10px] sm:text-xs" : "text-[13px] sm:text-[17px]"
+            }`}
+          >
             Innovation
           </span>
         </a>
