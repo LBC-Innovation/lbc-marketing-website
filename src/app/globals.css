@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+/* Dark mode is driven by a data attribute so the toggle can override the OS. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------------------------------------------------------------------------
+   Brand
+   Every value below is sampled from logo/lbci-logo.png. The gradient runs
+   #F5A26B (warm orange) to #EC7186 (rose); the wordmark is plum #5E4756.
+   --------------------------------------------------------------------------- */
+:root {
+  --brand-coral: #f5a26b;
+  --brand-rose: #ec7186;
+  --brand-plum: #5e4756;
+
+  /* Light theme — warm bone */
+  --bg: #fbf7f4;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #f4ece6;
+  --border: #e8ddd6;
+  --border-strong: #d8c8be;
+  --ink: #2e2129;
+  --ink-muted: #786470;
+  --ink-faint: #a3919b;
+  /* Rose is darkened for light backgrounds so link text clears WCAG AA. */
+  --accent: #c2445d;
+  --accent-hover: #a5364d;
+  --glow: 245 162 107;
+  --shadow: 46 33 41;
+}
+
+[data-theme="dark"] {
+  --bg: #140f16;
+  --bg-elevated: #1e1720;
+  --bg-sunken: #0d090e;
+  --border: #33262f;
+  --border-strong: #4a3844;
+  --ink: #f4edef;
+  --ink-muted: #a08e99;
+  --ink-faint: #75636e;
+  --accent: #f08a9a;
+  --accent-hover: #f5a4b1;
+  --glow: 236 113 134;
+  --shadow: 0 0 0;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-elevated: var(--bg-elevated);
+  --color-sunken: var(--bg-sunken);
+  --color-edge: var(--border);
+  --color-edge-strong: var(--border-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-faint: var(--ink-faint);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-coral: var(--brand-coral);
+  --color-rose: var(--brand-rose);
+  --color-plum: var(--brand-plum);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, "SF Mono", monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchored sections clear of the sticky header. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--brand-rose);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    /* Reveals never hide anything when motion is reduced. */
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
+
+@layer components {
+  /* The brand gradient as text fill — used only on the hero accent line. */
+  .text-gradient {
+    background-image: linear-gradient(
+      100deg,
+      var(--brand-coral) 0%,
+      var(--brand-rose) 55%,
+      var(--brand-coral) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .rule-gradient {
+    background-image: linear-gradient(
+      90deg,
+      var(--brand-coral),
+      var(--brand-rose),
+      transparent
+    );
+  }
+
+  /* Section eyebrow: small mono label with a short gradient tick. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-mono-face), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background-image: linear-gradient(90deg, var(--brand-coral), var(--brand-rose));
+  }
+}
+
+/* Scroll reveal. Content is visible by default and only hidden once the
+   observer confirms JS is running, so no-JS and reduced-motion users see
+   everything immediately. */
+[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+[data-reveal="shown"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
