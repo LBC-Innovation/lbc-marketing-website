@@ -12,12 +12,20 @@ import { useEffect, useRef } from "react";
  * zero and the animation reduces to translateY plus scale — one composited
  * transform, no layout work per frame.
  *
- * Progress is mapped so the lockup travels at exactly scroll speed: it appears
- * pinned to the page while it shrinks, then parks in the nav. Two empty
- * elements, #brand-slot-hero and #brand-slot-nav, reserve the space and are the
- * measurement targets, so the geometry follows the layout instead of
- * duplicating its numbers here.
+ * How far the logo moves is separate from how much scrolling docks it. Mapping
+ * progress straight onto the geometric gap makes the logo travel at exactly
+ * scroll speed — it looks pinned to the page while it shrinks — but that gap is
+ * the hero's top padding, which is small by design here. Left coupled, the
+ * whole thing would complete within a few dozen pixels of scroll. MIN_DOCK_SCROLL
+ * is the floor on the runway; when the layout happens to give more room than
+ * that, the pinned-to-page mapping returns on its own.
+ *
+ * Two empty elements, #brand-slot-hero and #brand-slot-nav, reserve the space
+ * and are the measurement targets, so the geometry follows the layout instead
+ * of duplicating its numbers here.
  */
+const MIN_DOCK_SCROLL = 170;
+
 export function BrandLockup() {
   const ref = useRef<HTMLAnchorElement>(null);
 
@@ -38,7 +46,7 @@ export function BrandLockup() {
 
     const apply = () => {
       queued = 0;
-      const travel = Math.max(startY - endY, 1);
+      const travel = Math.max(startY - endY, MIN_DOCK_SCROLL);
       // An open mobile sheet pins the lockup to the nav regardless of scroll.
       const p =
         root.dataset.menuOpen === "true"

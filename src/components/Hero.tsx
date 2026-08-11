@@ -6,7 +6,10 @@ export function Hero() {
     <section id="top" className="relative overflow-hidden">
       <HeroBackdrop />
 
-      <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-32 sm:px-8 sm:pb-28 sm:pt-44 lg:pb-36 lg:pt-52">
+      <div
+        style={{ paddingTop: "var(--hero-gap)" }}
+        className="relative mx-auto max-w-6xl px-5 pb-20 sm:px-8 sm:pb-28 lg:pb-36"
+      >
         {/* Reserves the space <BrandLockup /> occupies at rest, and is the
             measurement target it starts from. */}
         <div
@@ -15,7 +18,18 @@ export function Hero() {
           className="h-20 md:h-24 xl:h-28"
         />
 
-        <h1 className="mt-7 max-w-4xl text-[clamp(2.6rem,8.5vw,5.75rem)] font-semibold leading-[0.94] tracking-[-0.04em]">
+        {/* The margin is --hero-gap less the headline's own leading, so the gap
+            you SEE below the logo matches the one above it. Cap height sits
+            0.107em below the box top at leading 0.94 (Inter's ascent 0.969em,
+            cap 0.727em); expressed against --h1-size it stays correct across
+            the whole clamp rather than only at one viewport width. */}
+        <h1
+          style={{
+            fontSize: "var(--h1-size)",
+            marginTop: "calc(var(--hero-gap) - 0.107 * var(--h1-size))",
+          }}
+          className="max-w-4xl font-semibold leading-[0.94] tracking-[-0.04em]"
+        >
           AI woven in.
           <br />
           <span className="text-gradient">Not bolted on.</span>

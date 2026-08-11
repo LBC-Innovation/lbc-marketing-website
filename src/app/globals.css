@@ -159,42 +159,46 @@
 
 /* Pre-hydration resting positions, so the header paints correctly before
    <BrandLockup />'s effect runs and replaces these with measured values.
-   --brand-hero-y mirrors the hero's top padding (pt-32 / sm:pt-44 / lg:pt-52).
+   --brand-hero-y mirrors the hero's top padding (pt-10 / sm:pt-12 / lg:pt-14).
    --nav-offset is hero-y plus half the logo, less half the bar's height: it
    drops the nav contents to the logo's centreline. --brand-slot-w is the
    expanded lockup's width, which depends on font metrics and so is only
    approximated here. All three are replaced with measured values on mount. */
 :root {
-  --brand-hero-y: 8rem;
-  --nav-offset: 8.5rem; /* 128 + 40 − 32 */
+  /* One value sets the space above the logo and the space below it, so the
+     two read as a matched pair. */
+  --hero-gap: 2.5rem;
+  --h1-size: clamp(2.6rem, 8.5vw, 5.75rem);
+  --brand-hero-y: var(--hero-gap);
+  --nav-offset: 3rem; /* 40 + 40 − 32 */
   --brand-slot-w: 14.5rem;
   --brand-chrome: 0;
 }
 
 @media (min-width: 640px) {
   :root {
-    --brand-hero-y: 11rem;
-    --nav-offset: 11rem; /* 176 + 40 − 40 */
+    --hero-gap: 3rem;
+    --nav-offset: 3rem; /* 48 + 40 − 40 */
   }
 }
 
 @media (min-width: 768px) {
   :root {
-    --nav-offset: 11.5rem; /* 176 + 48 − 40 */
+    --nav-offset: 3.5rem; /* 48 + 48 − 40 */
     --brand-slot-w: 19.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --brand-hero-y: 13rem;
-    --nav-offset: 13.5rem; /* 208 + 48 − 40 */
+    --hero-gap: 3.5rem;
+    --nav-offset: 4rem; /* 56 + 48 − 40 */
   }
 }
 
 @media (min-width: 1280px) {
   :root {
-    --nav-offset: 14rem; /* 208 + 56 − 40 */
+    --nav-offset: 4.5rem; /* 56 + 56 − 40 */
     --brand-slot-w: 23rem;
   }
 }
