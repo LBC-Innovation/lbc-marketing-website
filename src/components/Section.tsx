@@ -22,7 +22,11 @@ export function Section({
   return (
     <section
       id={id}
-      className={`mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28 lg:py-36 ${className}`}
+      // Keep in step with the hero's pb-*: together they set the gap between
+      // sections. It wants to stay clearly larger than the mt-* below, which
+      // is the biggest gap inside a section — that contrast is what keeps
+      // sections reading as separate blocks.
+      className={`mx-auto max-w-6xl px-5 py-14 sm:px-8 sm:py-16 lg:py-20 ${className}`}
     >
       <Reveal>
         <p className="eyebrow">{eyebrow}</p>

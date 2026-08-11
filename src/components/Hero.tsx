@@ -8,7 +8,7 @@ export function Hero() {
 
       <div
         style={{ paddingTop: "var(--hero-gap)" }}
-        className="relative mx-auto max-w-6xl px-5 pb-20 sm:px-8 sm:pb-28 lg:pb-36"
+        className="relative mx-auto max-w-6xl px-5 pb-14 sm:px-8 sm:pb-16 lg:pb-20"
       >
         {/* Reserves the space <BrandLockup /> occupies at rest, and is the
             measurement target it starts from. */}
