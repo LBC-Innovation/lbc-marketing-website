@@ -44,7 +44,10 @@ export function Nav() {
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:h-20 sm:px-8">
         <a
           href="#top"
-          className="flex items-center gap-2.5"
+          // The mark carries the identity alone here, so the link needs an
+          // explicit name — there is no longer any text to supply one.
+          aria-label="LBC Innovation — back to top"
+          className="flex items-center"
           onClick={() => setMenuOpen(false)}
         >
           <Image
@@ -53,11 +56,8 @@ export function Nav() {
             width={512}
             height={512}
             priority
-            className="size-7 sm:size-8"
+            className="size-[1.8375rem] sm:size-[2.1rem]"
           />
-          <span className="text-[15px] font-semibold tracking-tight">
-            LBC <span className="text-muted font-normal">Innovation</span>
-          </span>
         </a>
 
         <div className="hidden items-center gap-1 md:flex">
