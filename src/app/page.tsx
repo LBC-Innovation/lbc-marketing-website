@@ -1,4 +1,3 @@
-import { About } from "@/components/About";
 import { Approach } from "@/components/Approach";
 import { BrandLockup } from "@/components/BrandLockup";
 import { Contact } from "@/components/Contact";
@@ -45,7 +44,6 @@ export default function Home() {
         <Services />
         <Approach />
         <Currently />
-        <About />
         <Contact />
       </main>
       <Footer />

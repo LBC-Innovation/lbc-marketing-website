@@ -3,7 +3,7 @@
  *
  * ┌─────────────────────────────────────────────────────────────────────┐
  * │ PLACEHOLDERS — replace these before the first real deploy.          │
- * │   founderName, url, email, calLink, social.*                        │
+ * │   url, email, calLink, social.*                                     │
  * │ Everything else is finished copy.                                   │
  * └─────────────────────────────────────────────────────────────────────┘
  */
@@ -17,9 +17,6 @@ export const site = {
 
   /** PLACEHOLDER — used for canonical URLs, sitemap, and OG tags. */
   url: "https://lbcinnovation.com",
-
-  /** PLACEHOLDER — your name, shown in the About section. */
-  founderName: "Your Name",
 
   /** PLACEHOLDER — inbox that contact form submissions are delivered to. */
   email: "hello@lbcinnovation.com",
@@ -37,7 +34,6 @@ export const site = {
     { label: "Work together", href: "#services" },
     { label: "Approach", href: "#approach" },
     { label: "Currently", href: "#currently" },
-    { label: "About", href: "#about" },
   ],
 } as const;
 

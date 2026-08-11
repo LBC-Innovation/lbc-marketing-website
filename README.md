@@ -32,7 +32,6 @@ Replace the placeholders in [`src/lib/site.ts`](src/lib/site.ts) — they are gr
 at the top of the file and each is marked `PLACEHOLDER`:
 
 - `url` — the live domain, used for canonical tags, OG metadata, and the sitemap
-- `founderName` — shown in the About section
 - `email` — where contact form submissions land
 - `calLink` — Cal.com booking URL
 - `social.linkedin` / `social.github` — set either to `null` to hide the link
