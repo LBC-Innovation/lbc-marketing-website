@@ -12,7 +12,7 @@ export function Hero() {
         <div
           id="brand-slot-hero"
           aria-hidden="true"
-          className="h-20 sm:h-24 lg:h-28"
+          className="h-20 md:h-24 xl:h-28"
         />
 
         <h1 className="mt-7 max-w-4xl text-[clamp(2.6rem,8.5vw,5.75rem)] font-semibold leading-[0.94] tracking-[-0.04em]">
