@@ -31,6 +31,14 @@ export type ProjectProof = {
   body: string;
 };
 
+export type ProjectShot = {
+  src: string;
+  alt: string;
+  label?: string;
+  width: number;
+  height: number;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -42,8 +50,8 @@ export type Project = {
   thumbnail: string | null;
   /** Focused image on the project page. Falls back to thumbnail. */
   hero?: string | null;
-  /** Optional phone screenshot, shown beside the hero. */
-  heroMobile?: string | null;
+  /** Labeled gallery on the project page. Takes precedence over hero. */
+  shots?: ProjectShot[];
   github?: string;
   /** Third-slot card: visible on the homepage, no detail page. */
   comingSoon?: boolean;
@@ -110,7 +118,23 @@ const projects: Project[] = [
     description:
       "Kids describe what they want to color, talk it through with Smarty, and print a sheet of their own invention.",
     thumbnail: "/projects/smartycolor-thumb.jpg",
-    hero: "/projects/smartycolor-hero.png",
+    hero: "/projects/smartycolor-hero.jpg",
+    shots: [
+      {
+        src: "/projects/smartycolor-hero.jpg",
+        alt: "SmartyColor — conversation and drawing plan",
+        label: "The app",
+        width: 1024,
+        height: 608,
+      },
+      {
+        src: "/projects/smartycolor-output.jpg",
+        alt: "A coloring sheet SmartyColor generated",
+        label: "The sheet",
+        width: 1024,
+        height: 608,
+      },
+    ],
     github: "https://github.com/LBC-Innovation/SmartyColor",
     story: [
       "A child has a picture in their head. Store-bought books don't have that picture. SmartyColor is the conversation that gets it onto paper.",
@@ -145,12 +169,28 @@ const projects: Project[] = [
     description:
       "Friends on different music services still can't share a playlist the other person can play. ShareList is the layer in the middle — matching tracks, not playing them.",
     thumbnail: "/projects/sharelist-thumb.jpg",
-    hero: "/projects/sharelist-hero.png",
-    heroMobile: "/projects/sharelist-mobile.jpg",
+    hero: "/projects/sharelist-hero.jpg",
+    shots: [
+      {
+        src: "/projects/sharelist-hero.jpg",
+        alt: "ShareList as a desktop PWA",
+        label: "Desktop PWA",
+        width: 1024,
+        height: 694,
+      },
+      {
+        src: "/projects/sharelist-mobile.jpg",
+        alt: "ShareList on a phone",
+        label: "Phone",
+        width: 470,
+        height: 1024,
+      },
+    ],
     github: "https://github.com/LBC-Innovation/ShareList",
     story: [
       "A Spotify playlist sent to someone on Apple Music is usually a screenshot. ShareList is the layer in the middle. Each person keeps their own playlist on their own service. The ShareList is what they share.",
       "Connect a service, pick a playlist, invite a friend. They link a playlist from their side. Sync copies missing tracks into each linked playlist when a match exists; songs that only live on one catalog stay put. It is not a player and it does not host audio.",
+      "The client is a PWA. Install it and ShareList is its own window — the dock on a laptop, the home screen on a phone — not a tab. Standalone display, a service worker, Apple icons and splash screens. Same Vite build on both.",
       "Spotify, Apple Music, and SoundCloud are wired today. YouTube Music is reserved in the schema. Tokens live on the server, not in the browser. The frontend talks only to our API; the API talks to the vendors.",
       "This one is still being explored. The hard part is matching catalogs and writing back safely — not another set of screens.",
     ],
@@ -164,6 +204,10 @@ const projects: Project[] = [
         body: "React on one deploy, Express on another, Supabase for auth and Postgres. The browser never talks to Spotify or Apple directly.",
       },
       {
+        title: "It installs like software",
+        body: "A PWA with standalone display, a service worker, and Apple home-screen icons and splash screens. People keep it in the dock or on the phone without an app store.",
+      },
+      {
         title: "One repo, two ships",
         body: "A monorepo that deploys as two Vercel projects, with CI in between. Web from git; the API typechecked and transpiled before it goes out.",
       },
@@ -175,6 +219,7 @@ const projects: Project[] = [
     stack: [
       "React",
       "Vite",
+      "PWA",
       "Express",
       "TypeScript",
       "Supabase",

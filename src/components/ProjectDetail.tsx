@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
-import type { Project, ProjectStatus } from "@/lib/content";
+import type { Project, ProjectShot, ProjectStatus } from "@/lib/content";
 import { site } from "@/lib/site";
 import { Footer } from "./Footer";
 import { Nav } from "./Nav";
+import { ProjectShots } from "./ProjectShots";
 import { Reveal } from "./Reveal";
 
 const statusStyles: Record<ProjectStatus, string> = {
@@ -12,45 +12,27 @@ const statusStyles: Record<ProjectStatus, string> = {
   Researching: "border-edge-strong text-muted",
 };
 
-function Shot({
-  src,
-  alt,
-  label,
-  width,
-  height,
-}: {
-  src: string;
-  alt: string;
-  label?: string;
-  width: number;
-  height: number;
-}) {
-  return (
-    <figure className="overflow-hidden rounded-2xl border border-edge bg-sunken">
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        unoptimized
-        priority
-        className="h-auto w-full"
-      />
-      {label ? (
-        <figcaption className="border-t border-edge px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-          {label}
-        </figcaption>
-      ) : null}
-    </figure>
-  );
+function shotsFor(project: Project): ProjectShot[] {
+  if (project.shots?.length) return project.shots;
+
+  const desktop = project.hero ?? project.thumbnail;
+  if (!desktop) return [];
+
+  return [
+    {
+      src: desktop,
+      alt: `${project.title} interface`,
+      width: 1024,
+      height: 707,
+    },
+  ];
 }
 
 export function ProjectDetail({ project }: { project: Project }) {
   const story = project.story ?? [];
   const demonstrates = project.demonstrates ?? [];
   const stack = project.stack ?? [];
-  const desktop = project.hero ?? project.thumbnail;
-  const mobile = project.heroMobile;
+  const shots = shotsFor(project);
 
   return (
     <>
@@ -76,34 +58,10 @@ export function ProjectDetail({ project }: { project: Project }) {
             </Reveal>
           </header>
 
-          {desktop || mobile ? (
+          {shots.length > 0 ? (
             <div className="mx-auto max-w-6xl px-5 sm:px-8">
               <Reveal>
-                {desktop && mobile ? (
-                  <div className="grid items-start gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(11rem,17rem)] sm:gap-5">
-                    <Shot
-                      src={desktop}
-                      alt={`${project.title} on desktop`}
-                      label="Desktop"
-                      width={1024}
-                      height={630}
-                    />
-                    <Shot
-                      src={mobile}
-                      alt={`${project.title} on a phone`}
-                      label="Phone"
-                      width={470}
-                      height={1024}
-                    />
-                  </div>
-                ) : (
-                  <Shot
-                    src={(desktop ?? mobile)!}
-                    alt={`${project.title} interface`}
-                    width={1600}
-                    height={1000}
-                  />
-                )}
+                <ProjectShots shots={shots} />
               </Reveal>
             </div>
           ) : null}
