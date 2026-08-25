@@ -11,9 +11,9 @@
 export const site = {
   name: "LBC Innovation",
   legalName: "Limitless Bounds Creative Innovation",
-  tagline: "AI woven in. Not bolted on.",
+  tagline: "AI Woven in, not bolted on.",
   description:
-    "A product studio for businesses that don't call themselves tech companies. Product innovation, fractional CTO leadership, and efficiency work that ends in something running.",
+    "We help companies that aren't tech companies build software: new products, part-time technical leadership, and projects that take real cost out of day-to-day work.",
 
   /** PLACEHOLDER — used for canonical URLs, sitemap, and OG tags. */
   url: "https://lbcinnovation.com",
@@ -31,9 +31,9 @@ export const site = {
   },
 
   nav: [
-    { label: "Work together", href: "#services" },
-    { label: "Approach", href: "#approach" },
-    { label: "Currently", href: "#currently" },
+    { label: "What we do", href: "#services" },
+    { label: "How we work", href: "#approach" },
+    { label: "In progress", href: "#currently" },
   ],
 } as const;
 

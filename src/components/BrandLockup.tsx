@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 /**
@@ -139,7 +138,7 @@ export function BrandLockup() {
         <a
           ref={ref}
           href="#top"
-          aria-label="LBC Innovation — back to top"
+          aria-label="LBC Innovation, back to top"
           // The inline transform is the pre-hydration position: --brand-hero-y
           // mirrors the hero's top padding so the lockup renders in the right
           // place before the effect runs. JS replaces it with measured values.
@@ -149,12 +148,12 @@ export function BrandLockup() {
           {/* The size steps are md/xl rather than sm/lg: expanded, the lockup
               shares the bar with the links and buttons, and stepping up at the
               same breakpoints they appear at left no gap between them. */}
-          <Image
-            src="/logo/lbci-mark.png"
+          <img
+            src="/logo/lbci-mark.svg"
             alt=""
             width={512}
             height={512}
-            priority
+            fetchPriority="high"
             className="size-20 md:size-24 xl:size-28"
           />
           {/* Tracking is in em so it scales with the type under transform. */}

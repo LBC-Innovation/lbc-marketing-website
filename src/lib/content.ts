@@ -46,45 +46,45 @@ const services: Service[] = [
     id: "product-innovation",
     index: "01",
     title: "Product Innovation",
-    promise: "Imagine the product that assumes AI, then build it.",
-    body: "Not a feature bolted onto an existing roadmap. We start from what your business actually does, ask what becomes possible when intelligence is assumed rather than added, and ship a working version you can put in front of real people.",
+    promise: "Figure out what the product should be if AI is in it from the start. Then build that.",
+    body: "We sit with how you actually operate, sketch the version of the product that only makes sense now, and get a working build in front of the people who'd use it.",
   },
   {
     id: "fractional-cto",
     index: "02",
     title: "Fractional CTO",
-    promise: "Ongoing technical leadership for teams without a CTO.",
-    body: "Architecture, hiring, vendor decisions, and the judgment calls that are expensive to get wrong. Enough presence to be genuinely accountable, structured so you are not carrying a full-time executive salary to get it.",
+    promise: "Technical leadership when you need a CTO and aren't hiring one full-time.",
+    body: "Architecture, hiring, vendors, and the decisions that get expensive if you guess. We're around enough to own the outcome, without you taking on a full-time executive salary to get there.",
   },
   {
     id: "efficiency-sprint",
     index: "03",
     title: "Efficiency Sprint",
-    promise: "Fixed scope. Find where modern tech removes real cost. Ship it. Prove it.",
-    body: "A defined engagement that ends in something running, with a number attached. Built for operations that still move on spreadsheets, email threads, and institutional memory — where the gains are largest and least glamorous.",
+    promise: "A short, scoped project. Find the busywork, replace it, and show the number.",
+    body: "We pick one messy process (usually a spreadsheet, an email chain, or something only one person knows how to do) and leave you with a working replacement. You get a before-and-after you can point at.",
   },
 ];
 
 const principles: Principle[] = [
   {
     id: "start-with-the-work",
-    title: "Start with the work, not the technology",
-    body: "The question is never where we can put AI. It is what the business actually does all day, and which parts of that should no longer require a person.",
+    title: "Start with the work",
+    body: "We don't begin with where AI could go. We begin with what people do all day, and which of those hours shouldn't still need a person.",
   },
   {
     id: "woven-not-appended",
-    title: "Woven, not appended",
-    body: "Anyone can add a panel to an existing screen. The harder move is redrawing the process itself, so the intelligence is load-bearing rather than decorative.",
+    title: "Change the process, not just the screen",
+    body: "It's easy to drop a new panel onto an old workflow. It's more useful to change the workflow so the software is doing real work, not sitting in the corner waiting to be asked.",
   },
   {
     id: "ship-to-learn",
-    title: "Ship to learn",
-    body: "Working software beats a deck. The fastest way to find out whether an idea holds is to put a real version of it in someone's hands and watch what they do.",
+    title: "Put it in someone's hands",
+    body: "A working version tells you more than a deck. We'd rather find out early that an idea is wrong than spend months polishing a plan.",
   },
   {
     id: "boring-underneath",
-    title: "Boring where it counts",
-    body: "Novel at the surface, conventional underneath. The interesting risk belongs in the product. It never belongs in the infrastructure.",
+    title: "Keep the plumbing ordinary",
+    body: "Be inventive in the product. Use well-understood tools underneath. The risky part shouldn't be whether the servers stay up.",
   },
 ];
 
@@ -100,7 +100,7 @@ const projects: Project[] = [
     title: "Project One",
     status: "Building",
     description:
-      "A short, plain description of what this is and who it is for. Two or three sentences is the right length — enough to make the idea concrete, short enough that someone scanning the page still reads it. Say what it does before you say why it matters.",
+      "An internal tool for a mid-size operator who still runs scheduling in a shared spreadsheet. The first version is in use with a handful of people.",
     image: null,
     isPlaceholder: true,
   },
@@ -109,7 +109,7 @@ const projects: Project[] = [
     title: "Project Two",
     status: "Exploring",
     description:
-      "Something you are actively poking at but have not committed to. The Exploring tag does real work here: it lets you show early thinking without implying a launch date, which is exactly the honest position for work at this stage.",
+      "Looking at whether claims intake can skip the inbox entirely. Too early to call it a product. On this list because it's taking real hours.",
     image: null,
     isPlaceholder: true,
   },
@@ -118,7 +118,7 @@ const projects: Project[] = [
     title: "Project Three",
     status: "Researching",
     description:
-      "An open question you are spending time on. Research entries signal the direction of your attention, which is often more persuasive to a prospective client than a finished case study — it shows how you think, not just what you shipped.",
+      "Talking with small manufacturers about how production data actually moves. No build yet. Trying to find the part that's worth building.",
     image: null,
     isPlaceholder: true,
   },

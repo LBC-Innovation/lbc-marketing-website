@@ -16,9 +16,9 @@ export async function Currently() {
   return (
     <Section
       id="currently"
-      eyebrow="Currently"
-      title="What's on the bench."
-      lede="No case-study theater. This is what is actually being built, poked at, and read about right now — which says more about how the work goes than a finished logo wall would."
+      eyebrow="In progress"
+      title="What we're working on."
+      lede="This is what's on our desks right now, including work that isn't ready to show off yet."
     >
       <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, i) => (

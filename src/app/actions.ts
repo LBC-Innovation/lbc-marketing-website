@@ -42,17 +42,17 @@ export async function submitContact(
   // Honeypot: hidden from humans, irresistible to bots. Accept silently so the
   // bot has no signal that it was caught.
   if (String(formData.get("website") ?? "")) {
-    return { ...emptyContactState, status: "success", message: "Thanks — your note is on its way." };
+    return { ...emptyContactState, status: "success", message: "Thanks. Your note is on its way." };
   }
 
   const fieldErrors: Partial<Record<ContactField, string>> = {};
   if (values.name.length < 2) fieldErrors.name = "Please enter your name.";
   if (!EMAIL_RE.test(values.email)) fieldErrors.email = "Please enter a valid email address.";
   if (values.message.length < 20) {
-    fieldErrors.message = "A sentence or two more would help — 20 characters minimum.";
+    fieldErrors.message = "A sentence or two more would help. 20 characters minimum.";
   }
   if (values.message.length > 5000) {
-    fieldErrors.message = "That is over the 5,000 character limit.";
+    fieldErrors.message = "That's over the 5,000 character limit.";
   }
 
   if (Object.keys(fieldErrors).length > 0) {
@@ -68,7 +68,7 @@ export async function submitContact(
   if (rateLimited(ip)) {
     return {
       status: "error",
-      message: `That is a lot of messages in one hour. Email ${site.email} directly and it will get through.`,
+      message: `That's a lot of messages in one hour. Email ${site.email} directly and it will get through.`,
       fieldErrors: {},
       values,
     };
@@ -81,7 +81,7 @@ export async function submitContact(
     console.warn("[contact] RESEND_API_KEY is not set; submission not delivered:", values);
     return {
       status: "error",
-      message: `Email delivery is not configured yet. Please reach ${site.email} directly for now.`,
+      message: `Email delivery isn't set up yet. Please write ${site.email} directly for now.`,
       fieldErrors: {},
       values,
     };
@@ -107,7 +107,7 @@ export async function submitContact(
       console.error("[contact] Resend rejected the send:", error);
       return {
         status: "error",
-        message: `Something went wrong sending that. Please try ${site.email} directly.`,
+        message: `That didn't send. Please try ${site.email} directly.`,
         fieldErrors: {},
         values,
       };
@@ -116,13 +116,13 @@ export async function submitContact(
     return {
       ...emptyContactState,
       status: "success",
-      message: "Thanks — that came through. You'll hear back within a couple of days.",
+      message: "Thanks. That came through. You'll hear back in a couple of days.",
     };
   } catch (err) {
     console.error("[contact] Unexpected failure:", err);
     return {
       status: "error",
-      message: `Something went wrong sending that. Please try ${site.email} directly.`,
+        message: `That didn't send. Please try ${site.email} directly.`,
       fieldErrors: {},
       values,
     };

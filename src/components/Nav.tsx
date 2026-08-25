@@ -82,7 +82,7 @@ export function Nav() {
             href="#contact"
             className="hidden rounded-full bg-ink px-4 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-85 sm:inline-flex"
           >
-            Start a conversation
+            Get in touch
           </a>
           <button
             type="button"
@@ -134,7 +134,7 @@ export function Nav() {
               onClick={() => setMenuOpen(false)}
               className="mt-4 block rounded-full bg-ink px-5 py-3 text-center text-sm font-medium text-bg"
             >
-              Start a conversation
+              Get in touch
             </a>
           </li>
         </ul>

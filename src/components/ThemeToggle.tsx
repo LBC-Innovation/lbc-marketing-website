@@ -38,8 +38,8 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       onClick={toggle}
       // Icon visibility is driven by CSS off [data-theme], not React state, so
       // the server and client markup match and the label can stay constant.
-      aria-label="Toggle color theme"
-      title="Toggle color theme"
+      aria-label="Light or dark mode"
+      title="Light or dark mode"
       className={`grid size-9 place-items-center rounded-full border border-edge text-muted transition-colors hover:border-edge-strong hover:text-ink ${className}`}
     >
       <svg

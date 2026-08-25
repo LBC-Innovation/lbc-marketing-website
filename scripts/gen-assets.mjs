@@ -1,22 +1,13 @@
 /**
  * Derives every logo asset the site needs from the single source file in /logo.
  *
- * Two properties of the source make this more than a resize:
+ * The source is a transparent full lockup: a gradient mark stacked over a
+ * gradient "INNOVATION" wordmark. Both halves keep their original color on
+ * light and dark — the wordmark is already visible on either field.
  *
- *   1. The plum "INNOVATION" wordmark is invisible on a dark background, so the
- *      dark theme needs it recolored to bone.
- *   2. The counters of the O and the A are filled with opaque WHITE rather than
- *      being transparent. Left alone those read as light blobs on any surface
- *      that is not pure white — including the dark theme and the footer's
- *      tinted panel.
- *
- * Both are handled by rebuilding the wordmark as ink-on-transparent: luminance
- * becomes alpha, so plum goes fully opaque, white goes fully transparent, and
- * the blended pixels along the counter edges become partial alpha instead of a
- * pale fringe. The mark itself is never touched.
- *
- * Every boundary below is measured from the pixels rather than hardcoded, so
- * moving the wordmark or changing the canvas does not silently corrupt output.
+ * The mark/wordmark boundary is measured from ink (non-transparent rows),
+ * not from a specific palette, so a future color shift does not silently
+ * crop the wrong half.
  *
  * Run: npm run assets
  */
@@ -25,13 +16,6 @@ import { mkdir } from "node:fs/promises";
 
 const SRC = "logo/lbci-logo.png";
 const OUT = "public/logo";
-
-const PLUM = [104, 76, 99]; // #684C63 — measured wordmark color
-const BONE = [244, 237, 239]; // #F4EDEF — --ink in the dark theme
-
-const isCoral = (r, _g, b) => r > 190 && r - b > 45;
-const isPlum = (r, _g, b) => r < 170 && b < 170;
-const luminance = (r, g, b) => (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
 
 await mkdir(OUT, { recursive: true });
 await mkdir("public/brand", { recursive: true });
@@ -49,91 +33,50 @@ const at = (x, y) => {
 
 // --- Measure where the mark ends and the wordmark begins ---------------------
 
-let markBottom = -1;
-let wordTop = -1;
-let wordBottom = -1;
-
+const bands = [];
+let run = null;
 for (let y = 0; y < height; y++) {
-  let coral = 0;
-  let plum = 0;
+  let ink = 0;
   for (let x = 0; x < width; x++) {
-    const [r, g, b, a] = at(x, y);
-    if (a < 128) continue;
-    if (isCoral(r, g, b)) coral++;
-    else if (isPlum(r, g, b)) plum++;
+    const [, , , a] = at(x, y);
+    if (a > 16) ink++;
   }
-  if (coral > 3) markBottom = y;
-  if (plum > 3) {
-    if (wordTop === -1) wordTop = y;
-    wordBottom = y;
+  if (ink > 3) {
+    if (!run) run = { start: y, end: y };
+    else run.end = y;
+  } else if (run) {
+    bands.push(run);
+    run = null;
   }
 }
+if (run) bands.push(run);
 
-if (markBottom === -1 || wordTop === -1) {
+if (bands.length < 2) {
   throw new Error(
     `Could not locate mark and wordmark in ${SRC} ` +
-      `(markBottom=${markBottom}, wordTop=${wordTop}). ` +
-      `The color classification needs revisiting for this file.`,
+      `(found ${bands.length} ink band${bands.length === 1 ? "" : "s"}). ` +
+      `Expected a stacked lockup with a gap between the mark and the wordmark.`,
   );
 }
-if (wordTop <= markBottom) {
+
+const markBand = bands[0];
+const wordBand = bands[bands.length - 1];
+if (wordBand.start <= markBand.end) {
   throw new Error(
-    `Wordmark (from row ${wordTop}) overlaps the mark (ends row ${markBottom}). ` +
+    `Wordmark (from row ${wordBand.start}) overlaps the mark (ends row ${markBand.end}). ` +
       `Splitting them by row no longer works for this file.`,
   );
 }
 
 // Split through the middle of the empty gap between the two.
-const cutRow = Math.round((markBottom + wordTop) / 2);
+const cutRow = Math.round((markBand.end + wordBand.start) / 2);
 
-// --- Rebuild the wordmark as ink on transparent ------------------------------
+// --- Full lockup: trim only. Light and dark share the same graphic. ----------
 
-// Normalize against the actual range present so the mapping holds even if the
-// exact plum or white values shift.
-let lMin = 1;
-let lMax = 0;
-for (let y = cutRow; y < height; y++) {
-  for (let x = 0; x < width; x++) {
-    const [r, g, b, a] = at(x, y);
-    if (a < 200) continue;
-    const l = luminance(r, g, b);
-    if (l < lMin) lMin = l;
-    if (l > lMax) lMax = l;
-  }
-}
-const lRange = Math.max(lMax - lMin, 0.001);
+const lockup = await sharp(SRC).trim({ threshold: 1 }).png().toBuffer();
 
-function withWordmark([tr, tg, tb]) {
-  const out = Buffer.from(data);
-  for (let y = cutRow; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      const i = (y * width + x) * channels;
-      const a = out[i + 3];
-      if (a === 0) continue;
-      const coverage = Math.min(
-        1,
-        Math.max(0, (lMax - luminance(out[i], out[i + 1], out[i + 2])) / lRange),
-      );
-      out[i] = tr;
-      out[i + 1] = tg;
-      out[i + 2] = tb;
-      out[i + 3] = Math.round(a * coverage);
-    }
-  }
-  return out;
-}
-
-const raw = { width, height, channels };
-
-await sharp(withWordmark(PLUM), { raw })
-  .trim({ threshold: 1 })
-  .png()
-  .toFile(`${OUT}/lbci-logo.png`);
-
-await sharp(withWordmark(BONE), { raw })
-  .trim({ threshold: 1 })
-  .png()
-  .toFile(`${OUT}/lbci-logo-dark.png`);
+await sharp(lockup).toFile(`${OUT}/lbci-logo.png`);
+await sharp(lockup).toFile(`${OUT}/lbci-logo-dark.png`);
 
 // --- Mark alone, squared, for the nav and favicons ---------------------------
 // Crop and trim run as two passes: sharp reorders them within one pipeline.
@@ -169,7 +112,7 @@ await sharp(squareMark)
   .png()
   .toFile("src/app/apple-icon.png");
 
-// --- Open Graph card: dark plum field, bone wordmark, centered ---------------
+// --- Open Graph card: dark plum field, centered lockup -----------------------
 
 const ogLogo = await sharp(`${OUT}/lbci-logo-dark.png`)
   .resize({ width: 620, fit: "inside" })
@@ -187,13 +130,19 @@ await sharp({
   .png()
   .toFile("public/brand/og.png");
 
+const lockupMeta = await sharp(lockup).metadata();
+
 console.log(`Source: ${SRC} (${width}x${height})`);
-console.log(`  mark rows ..${markBottom}, wordmark rows ${wordTop}..${wordBottom}`);
-console.log(`  split at row ${cutRow} (gap of ${wordTop - markBottom}px)`);
-console.log(`  wordmark luminance ${lMin.toFixed(3)}..${lMax.toFixed(3)} -> alpha`);
+console.log(
+  `  mark rows ${markBand.start}..${markBand.end}, wordmark rows ${wordBand.start}..${wordBand.end}`,
+);
+console.log(
+  `  split at row ${cutRow} (gap of ${wordBand.start - markBand.end}px)`,
+);
+console.log(`  lockup ${lockupMeta.width}x${lockupMeta.height}`);
 console.log("Generated:");
 console.log("  public/logo/lbci-logo.png       (light theme)");
-console.log("  public/logo/lbci-logo-dark.png  (dark theme, bone wordmark)");
+console.log("  public/logo/lbci-logo-dark.png  (dark theme)");
 console.log("  public/logo/lbci-mark.png       (nav)");
 console.log("  src/app/icon.png, src/app/apple-icon.png");
 console.log("  public/brand/og.png             (1200x630 social card)");
