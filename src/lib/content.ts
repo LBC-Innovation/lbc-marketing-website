@@ -37,9 +37,13 @@ export type Project = {
   status: ProjectStatus;
   /** Homepage card blurb. */
   description: string;
-  /** Path under /public, e.g. "/projects/atlas.png". Null renders the
-   *  generated placeholder thumbnail keyed off the slug. */
-  image: string | null;
+  /** Homepage card image. Null renders the generated placeholder
+   *  thumbnail keyed off the slug. */
+  thumbnail: string | null;
+  /** Focused image on the project page. Falls back to thumbnail. */
+  hero?: string | null;
+  /** Optional phone screenshot, shown beside the hero. */
+  heroMobile?: string | null;
   github?: string;
   /** Third-slot card: visible on the homepage, no detail page. */
   comingSoon?: boolean;
@@ -105,7 +109,8 @@ const projects: Project[] = [
     status: "Building",
     description:
       "Kids describe what they want to color, talk it through with Smarty, and print a sheet of their own invention.",
-    image: "/projects/smartycolor.png",
+    thumbnail: "/projects/smartycolor-thumb.jpg",
+    hero: "/projects/smartycolor-hero.png",
     github: "https://github.com/LBC-Innovation/SmartyColor",
     story: [
       "A child has a picture in their head. Store-bought books don't have that picture. SmartyColor is the conversation that gets it onto paper.",
@@ -139,7 +144,9 @@ const projects: Project[] = [
     status: "Exploring",
     description:
       "Friends on different music services still can't share a playlist the other person can play. ShareList is the layer in the middle — matching tracks, not playing them.",
-    image: "/projects/sharelist.png",
+    thumbnail: "/projects/sharelist-thumb.jpg",
+    hero: "/projects/sharelist-hero.png",
+    heroMobile: "/projects/sharelist-mobile.jpg",
     github: "https://github.com/LBC-Innovation/ShareList",
     story: [
       "A Spotify playlist sent to someone on Apple Music is usually a screenshot. ShareList is the layer in the middle. Each person keeps their own playlist on their own service. The ShareList is what they share.",
@@ -181,7 +188,7 @@ const projects: Project[] = [
     status: "Researching",
     description:
       "Not everything on the desk is ready to write about. This space stays open for whatever comes next.",
-    image: null,
+    thumbnail: null,
     comingSoon: true,
   },
 ];

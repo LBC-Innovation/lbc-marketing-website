@@ -14,14 +14,22 @@ const statusStyles: Record<ProjectStatus, string> = {
 function CardMedia({ project }: { project: Project }) {
   return (
     <div className="relative aspect-[16/10] overflow-hidden bg-sunken">
-      {project.image ? (
-        <Image
-          src={project.image}
-          alt=""
-          fill
-          sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw"
-          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-        />
+      {project.thumbnail ? (
+        project.slug === "smartycolor" ? (
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]"
+            style={{ backgroundImage: `url(${project.thumbnail})` }}
+          />
+        ) : (
+          <Image
+            src={project.thumbnail}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw"
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        )
       ) : (
         <ProjectThumb slug={project.slug} />
       )}

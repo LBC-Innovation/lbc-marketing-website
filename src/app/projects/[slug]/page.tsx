@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = await getProject(slug);
   if (!project) return { title: "Not found" };
 
+  const ogImage = project.hero ?? project.thumbnail;
   const url = `/projects/${project.slug}`;
   return {
     title: project.title,
@@ -29,15 +30,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: site.name,
       title: `${project.title} — ${site.name}`,
       description: project.description,
-      images: project.image
-        ? [{ url: project.image, alt: project.title }]
+      images: ogImage
+        ? [{ url: ogImage, alt: project.title }]
         : [{ url: "/brand/og.png", width: 1200, height: 630, alt: site.name }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${project.title} — ${site.name}`,
       description: project.description,
-      images: project.image ? [project.image] : ["/brand/og.png"],
+      images: ogImage ? [ogImage] : ["/brand/og.png"],
     },
   };
 }
