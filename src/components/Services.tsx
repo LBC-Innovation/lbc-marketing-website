@@ -8,9 +8,9 @@ export async function Services() {
   return (
     <Section
       id="services"
-      eyebrow="How we work together"
-      title="Three ways in."
-      lede="Different shapes for different problems. The common thread is that each one ends in something running, not something presented."
+      eyebrow="How we can help"
+      title="Three ways to work with us."
+      lede="Pick the shape that fits. Each one ends with something you can use."
     >
       <ul className="grid gap-px overflow-hidden rounded-2xl border border-edge bg-edge sm:grid-cols-2 lg:grid-cols-3">
         {services.map((service, i) => (

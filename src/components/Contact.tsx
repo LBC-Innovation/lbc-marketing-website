@@ -9,8 +9,8 @@ export function Contact() {
       id="contact"
       eyebrow="Contact"
       tone="sunken"
-      title="Start a conversation."
-      lede="Two doors, depending on how formed the idea is. Neither one obligates you to anything."
+      title="Get in touch."
+      lede="Book a call if you already know what you need. Or send a note and we'll go from there."
     >
       <div className="grid gap-10 lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] lg:gap-16">
         <Reveal>
@@ -22,10 +22,10 @@ export function Contact() {
               className="group block rounded-2xl border border-edge bg-elevated p-6 transition-colors hover:border-edge-strong"
             >
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
-                If you already know
+                Ready to talk
               </p>
               <p className="mt-3 flex items-center gap-2 text-lg font-semibold tracking-tight">
-                Book a 30-minute intro
+                Book a 30-minute call
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -40,14 +40,13 @@ export function Contact() {
                 </svg>
               </p>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">
-                Pick a time. No deck, no pitch — a conversation about what you
-                are trying to do.
+                Thirty minutes. No slides. Tell us what you&rsquo;re up against.
               </p>
             </a>
 
             <div className="rounded-2xl border border-edge p-6">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
-                Or just email
+                Email
               </p>
               <a
                 href={`mailto:${site.email}`}
@@ -62,7 +61,7 @@ export function Contact() {
         <Reveal delay={100}>
           <div className="rounded-2xl border border-edge bg-elevated p-6 sm:p-8">
             <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
-              If it is still fuzzy
+              Not sure yet? Write it here.
             </p>
             <ContactForm />
           </div>

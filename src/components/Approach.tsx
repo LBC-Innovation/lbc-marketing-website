@@ -8,13 +8,13 @@ export async function Approach() {
   return (
     <Section
       id="approach"
-      eyebrow="Approach"
+      eyebrow="How we work"
       tone="sunken"
       title={
         <>
-          A chat box in the corner is a feature.{" "}
+          Sticking a chat box in the corner is easy.{" "}
           <span className="text-muted">
-            Rebuilding the workflow around what a model can now do is a product.
+            Changing how the work actually gets done is the job.
           </span>
         </>
       }

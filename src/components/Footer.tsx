@@ -19,26 +19,27 @@ export function Footer() {
             <Image
               src="/logo/lbci-logo.png"
               alt={`${site.name} logo`}
-              width={1019}
-              height={758}
+              width={2269}
+              height={1789}
               className="h-24 w-auto dark:hidden"
             />
             <Image
               src="/logo/lbci-logo-dark.png"
               alt={`${site.name} logo`}
-              width={1019}
-              height={758}
+              width={2269}
+              height={1789}
               className="hidden h-24 w-auto dark:block"
             />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted">
-              {site.legalName}. {site.tagline}
+              {site.legalName}. We build software for companies that aren&rsquo;t
+              software companies.
             </p>
           </div>
 
           <div className="flex gap-12 sm:gap-20">
             <nav aria-label="Footer">
               <h2 className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
-                Sections
+                Site
               </h2>
               <ul className="mt-4 space-y-2.5">
                 {site.nav.map((item) => (

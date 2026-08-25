@@ -30,23 +30,25 @@ export function Hero() {
           }}
           className="max-w-4xl font-semibold leading-[0.94] tracking-[-0.04em]"
         >
-          AI woven in.
+          AI Woven in,
           <br />
-          <span className="text-gradient">Not bolted on.</span>
+          <span className="text-gradient">not bolted on.</span>
         </h1>
 
-        <p className="mt-8 max-w-xl text-[clamp(1.0625rem,2.2vw,1.3125rem)] leading-relaxed text-muted">
-          Most companies are adding AI to the product they already built. The
-          more interesting work is imagining the product that assumes it — and
-          then actually building the thing.
-        </p>
+        <div className="mt-8 max-w-xl space-y-4 text-[clamp(1.0625rem,2.2vw,1.3125rem)] leading-relaxed text-muted">
+          <p>We start where the work already lives. Spreadsheets, inboxes, one person&rsquo;s head.</p>
+          <p>
+            The win is when nobody has to remember to &ldquo;use the AI.&rdquo;
+            It&rsquo;s just how the work gets done.
+          </p>
+        </div>
 
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <a
             href="#contact"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-[15px] font-medium text-bg transition-opacity hover:opacity-85"
           >
-            Start a conversation
+            Get in touch
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -66,14 +68,9 @@ export function Hero() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-full border border-edge-strong px-6 py-3.5 text-[15px] font-medium transition-colors hover:bg-elevated"
           >
-            Book an intro call
+            Book a call
           </a>
         </div>
-
-        <p className="mt-14 max-w-md border-l-2 border-rose/50 pl-4 text-sm leading-relaxed text-faint sm:mt-20">
-          Built for businesses that don&rsquo;t call themselves tech companies —
-          where the gains are largest and the least glamorous.
-        </p>
       </div>
     </section>
   );

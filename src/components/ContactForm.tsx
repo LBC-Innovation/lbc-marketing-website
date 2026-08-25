@@ -16,7 +16,7 @@ function SubmitButton() {
       disabled={pending}
       className="inline-flex items-center justify-center rounded-full bg-ink px-6 py-3.5 text-[15px] font-medium text-bg transition-opacity hover:opacity-85 disabled:opacity-55"
     >
-      {pending ? "Sending…" : "Send it"}
+      {pending ? "Sending…" : "Send"}
     </button>
   );
 }
@@ -92,7 +92,7 @@ export function ContactForm() {
           name="message"
           rows={5}
           defaultValue={values.message}
-          placeholder="The rough shape is enough. Detail can come later."
+          placeholder="A few sentences is plenty."
           aria-invalid={Boolean(fieldErrors.message)}
           aria-describedby={fieldErrors.message ? "message-error" : undefined}
           className={`${fieldClass} resize-y`}
