@@ -316,3 +316,22 @@
     opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Full-viewport image viewer. Native <dialog> ships with a max-width
+   and a centred box; we want the dimmed page, not a card. */
+.shot-lightbox {
+  margin: 0;
+  max-width: none;
+  max-height: none;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  border: none;
+  /* Dialog fills the viewport, so dimming lives on the dialog itself —
+     a transparent dialog would let the page (nav, copy) show through. */
+  background: rgb(20 15 22 / 0.94);
+}
+
+.shot-lightbox::backdrop {
+  background: rgb(20 15 22 / 0.94);
+}

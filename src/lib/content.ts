@@ -26,17 +26,39 @@ export type Principle = {
 
 export type ProjectStatus = "Building" | "Exploring" | "Researching";
 
+export type ProjectProof = {
+  title: string;
+  body: string;
+};
+
+export type ProjectShot = {
+  src: string;
+  alt: string;
+  label?: string;
+  width: number;
+  height: number;
+};
+
 export type Project = {
   slug: string;
   title: string;
   status: ProjectStatus;
+  /** Homepage card blurb. */
   description: string;
-  /** Path under /public, e.g. "/projects/atlas.png". Null renders the
-   *  generated placeholder thumbnail keyed off the slug. */
-  image: string | null;
-  /** Reserved for detail pages; unused by the current single-page layout. */
-  href?: string;
+  /** Homepage card image. Null renders the generated placeholder
+   *  thumbnail keyed off the slug. */
+  thumbnail: string | null;
+  /** Focused image on the project page. Falls back to thumbnail. */
+  hero?: string | null;
+  /** Labeled gallery on the project page. Takes precedence over hero. */
+  shots?: ProjectShot[];
+  github?: string;
+  /** Third-slot card: visible on the homepage, no detail page. */
+  comingSoon?: boolean;
   isPlaceholder?: boolean;
+  story?: string[];
+  demonstrates?: ProjectProof[];
+  stack?: string[];
 };
 
 // --- Data -------------------------------------------------------------------
@@ -88,39 +110,131 @@ const principles: Principle[] = [
   },
 ];
 
-/**
- * PLACEHOLDER CONTENT — replace with your real projects.
- * Set `image` to a path under /public to use a real thumbnail; leave it null
- * to render the generated gradient placeholder. Drop `isPlaceholder` once the
- * entry is real — it is what dims the card and shows the sample badge.
- */
 const projects: Project[] = [
   {
-    slug: "project-one",
-    title: "Project One",
+    slug: "smartycolor",
+    title: "SmartyColor",
     status: "Building",
     description:
-      "An internal tool for a mid-size operator who still runs scheduling in a shared spreadsheet. The first version is in use with a handful of people.",
-    image: null,
-    isPlaceholder: true,
+      "Kids describe what they want to color, talk it through with Smarty, and print a sheet of their own invention.",
+    thumbnail: "/projects/smartycolor-thumb.jpg",
+    hero: "/projects/smartycolor-hero.jpg",
+    shots: [
+      {
+        src: "/projects/smartycolor-hero.jpg",
+        alt: "SmartyColor — conversation and drawing plan",
+        label: "The app",
+        width: 1024,
+        height: 608,
+      },
+      {
+        src: "/projects/smartycolor-output.jpg",
+        alt: "A coloring sheet SmartyColor generated",
+        label: "The sheet",
+        width: 1024,
+        height: 608,
+      },
+    ],
+    github: "https://github.com/LBC-Innovation/SmartyColor",
+    story: [
+      "A child has a picture in their head. Store-bought books don't have that picture. SmartyColor is the conversation that gets it onto paper.",
+      "They type or speak. A character named Smarty turns the chat into a list of drawing details they can edit — add a line, drop one, keep going. When the plan feels right, Make It builds a printable sheet on the same page.",
+      "No account is required. Sign-in is only there if someone wants to reopen an old sheet. The drawing model sits behind a provider facade, so the product isn't welded to one vendor. Printer options live in the header, because that's when paper actually comes up.",
+      "If they ask for a famous character, it aims for a close look-alike instead of a copy. That's a product constraint, not a slogan.",
+    ],
+    demonstrates: [
+      {
+        title: "A closed loop",
+        body: "Conversation, a structured plan, generation, print, and optional history. Not a chatbot taped to a download button.",
+      },
+      {
+        title: "The model does a job",
+        body: "AI produces something the child can inspect and change before anything is drawn. The unusual part is the workflow, not a panel in the corner.",
+      },
+      {
+        title: "An interface for people who aren't operators",
+        body: "Large type, voice input, one primary action. The same discipline we use when the user isn't a technologist.",
+      },
+      {
+        title: "Ordinary plumbing",
+        body: "Next.js on Vercel, optional Supabase. Be inventive in the product. Keep the stack boring.",
+      },
+    ],
+    stack: ["Next.js", "Tailwind CSS", "Gemini", "Supabase", "Vercel"],
   },
   {
-    slug: "project-two",
-    title: "Project Two",
+    slug: "sharelist",
+    title: "ShareList",
     status: "Exploring",
     description:
-      "Looking at whether claims intake can skip the inbox entirely. Too early to call it a product. On this list because it's taking real hours.",
-    image: null,
-    isPlaceholder: true,
+      "Friends on different music services still can't share a playlist the other person can play. ShareList is the layer in the middle — matching tracks, not playing them.",
+    thumbnail: "/projects/sharelist-thumb.jpg",
+    hero: "/projects/sharelist-hero.jpg",
+    shots: [
+      {
+        src: "/projects/sharelist-hero.jpg",
+        alt: "ShareList as a desktop PWA",
+        label: "Desktop PWA",
+        width: 1024,
+        height: 694,
+      },
+      {
+        src: "/projects/sharelist-mobile.jpg",
+        alt: "ShareList on a phone",
+        label: "Phone",
+        width: 470,
+        height: 1024,
+      },
+    ],
+    github: "https://github.com/LBC-Innovation/ShareList",
+    story: [
+      "A Spotify playlist sent to someone on Apple Music is usually a screenshot. ShareList is the layer in the middle. Each person keeps their own playlist on their own service. The ShareList is what they share.",
+      "Connect a service, pick a playlist, invite a friend. They link a playlist from their side. Sync copies missing tracks into each linked playlist when a match exists; songs that only live on one catalog stay put. It is not a player and it does not host audio.",
+      "The client is a PWA. Install it and ShareList is its own window — the dock on a laptop, the home screen on a phone — not a tab. Standalone display, a service worker, Apple icons and splash screens. Same Vite build on both.",
+      "Spotify, Apple Music, and SoundCloud are wired today. YouTube Music is reserved in the schema. Tokens live on the server, not in the browser. The frontend talks only to our API; the API talks to the vendors.",
+      "This one is still being explored. The hard part is matching catalogs and writing back safely — not another set of screens.",
+    ],
+    demonstrates: [
+      {
+        title: "Several vendors, several auth models",
+        body: "Redirect OAuth, Apple MusicKit in the page, OAuth 2.1. Tokens stored server-side. The product has to live with how each vendor actually works.",
+      },
+      {
+        title: "A real boundary",
+        body: "React on one deploy, Express on another, Supabase for auth and Postgres. The browser never talks to Spotify or Apple directly.",
+      },
+      {
+        title: "It installs like software",
+        body: "A PWA with standalone display, a service worker, and Apple home-screen icons and splash screens. People keep it in the dock or on the phone without an app store.",
+      },
+      {
+        title: "One repo, two ships",
+        body: "A monorepo that deploys as two Vercel projects, with CI in between. Web from git; the API typechecked and transpiled before it goes out.",
+      },
+      {
+        title: "Knowing what to leave out",
+        body: "No player, no hosted files, no replacement for the services people already pay for. The work is the sharing layer.",
+      },
+    ],
+    stack: [
+      "React",
+      "Vite",
+      "PWA",
+      "Express",
+      "TypeScript",
+      "Supabase",
+      "Vercel",
+      "Resend",
+    ],
   },
   {
-    slug: "project-three",
-    title: "Project Three",
+    slug: "more-on-the-way",
+    title: "More on the way",
     status: "Researching",
     description:
-      "Talking with small manufacturers about how production data actually moves. No build yet. Trying to find the part that's worth building.",
-    image: null,
-    isPlaceholder: true,
+      "Not everything on the desk is ready to write about. This space stays open for whatever comes next.",
+    thumbnail: null,
+    comingSoon: true,
   },
 ];
 
@@ -140,5 +254,11 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getProject(slug: string): Promise<Project | null> {
-  return projects.find((p) => p.slug === slug) ?? null;
+  const project = projects.find((p) => p.slug === slug) ?? null;
+  if (!project || project.comingSoon) return null;
+  return project;
+}
+
+export async function getProjectSlugs(): Promise<string[]> {
+  return projects.filter((p) => !p.comingSoon).map((p) => p.slug);
 }
