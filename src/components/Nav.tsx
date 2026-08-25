@@ -14,7 +14,7 @@ import { ThemeToggle } from "./ThemeToggle";
  * slot deliberately stays outside the transform: it is the measurement target
  * the lockup reads, and moving it would feed its own output back in.
  */
-export function Nav() {
+export function Nav({ solid = false }: { solid?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // The mobile sheet covers the page, so the body behind it must not scroll.
@@ -40,29 +40,48 @@ export function Nav() {
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
-  const follows = "brand-follow";
-  const followStyle = { transform: "translate3d(0, var(--nav-offset, 0px), 0)" };
+  const follows = solid ? "" : "brand-follow";
+  const followStyle = solid
+    ? undefined
+    : { transform: "translate3d(0, var(--nav-offset, 0px), 0)" };
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div
         aria-hidden="true"
-        style={{ opacity: "var(--brand-chrome, 0)" }}
+        style={solid ? undefined : { opacity: "var(--brand-chrome, 0)" }}
         className="absolute inset-0 border-b border-edge bg-bg/85 backdrop-blur-xl"
       />
 
       <nav className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:h-20 sm:px-8">
-        {/* The logo itself is <BrandLockup />, which is fixed and overlays this
-            spot so it can travel here from the hero. This reserves its space
-            and is the measurement target for where it lands. */}
-        {/* Width tracks the logo's current footprint so justify-between
-            distributes around it at every point in the travel. */}
+        {/* On the homepage the logo is <BrandLockup />, which overlays this
+            empty slot as it travels from the hero. Inner pages pass `solid`
+            and render the docked lockup here instead. */}
         <div
           id="brand-slot-nav"
-          aria-hidden="true"
-          style={{ width: "var(--brand-slot-w, 10rem)" }}
+          aria-hidden={solid ? undefined : true}
+          style={solid ? undefined : { width: "var(--brand-slot-w, 10rem)" }}
           className="h-11 shrink-0 sm:h-12"
-        />
+        >
+          {solid ? (
+            <a
+              href="/"
+              aria-label="LBC Innovation, back to home"
+              className="inline-flex h-full items-center gap-2.5 md:gap-3"
+            >
+              <img
+                src="/logo/lbci-mark.svg"
+                alt=""
+                width={48}
+                height={48}
+                className="size-11 sm:size-12"
+              />
+              <span className="text-[13px] uppercase tracking-[0.3em] sm:text-[15px]">
+                Innovation
+              </span>
+            </a>
+          ) : null}
+        </div>
 
         <div className={`hidden items-center gap-1 lg:flex ${follows}`} style={followStyle}>
           {site.nav.map((item) => (
@@ -79,7 +98,7 @@ export function Nav() {
         <div className={`flex items-center gap-2.5 ${follows}`} style={followStyle}>
           <ThemeToggle />
           <a
-            href="#contact"
+            href="/#contact"
             className="hidden rounded-full bg-ink px-4 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-85 sm:inline-flex"
           >
             Get in touch
@@ -130,7 +149,7 @@ export function Nav() {
           ))}
           <li>
             <a
-              href="#contact"
+              href="/#contact"
               onClick={() => setMenuOpen(false)}
               className="mt-4 block rounded-full bg-ink px-5 py-3 text-center text-sm font-medium text-bg"
             >
