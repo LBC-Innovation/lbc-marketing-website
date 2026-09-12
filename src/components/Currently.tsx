@@ -15,21 +15,13 @@ function CardMedia({ project }: { project: Project }) {
   return (
     <div className="relative aspect-[16/10] overflow-hidden bg-sunken">
       {project.thumbnail ? (
-        project.slug === "smartycolor" ? (
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03]"
-            style={{ backgroundImage: `url(${project.thumbnail})` }}
-          />
-        ) : (
-          <Image
-            src={project.thumbnail}
-            alt=""
-            fill
-            sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw"
-            className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-        )
+        <Image
+          src={project.thumbnail}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw"
+          className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+        />
       ) : (
         <ProjectThumb slug={project.slug} />
       )}
@@ -72,7 +64,7 @@ export async function Currently() {
       id="currently"
       eyebrow="In progress"
       title="What we're working on."
-      lede="What's on the desk. Two of these are far enough along to write about."
+      lede="What's on the desk. Three of these are far enough along to write about."
     >
       <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, i) => (

@@ -117,7 +117,7 @@ const projects: Project[] = [
     status: "Building",
     description:
       "Kids describe what they want to color, talk it through with Smarty, and print a sheet of their own invention.",
-    thumbnail: "/projects/smartycolor-thumb.jpg",
+    thumbnail: "/projects/smartycolor-mark.png",
     hero: "/projects/smartycolor-hero.jpg",
     shots: [
       {
@@ -168,7 +168,7 @@ const projects: Project[] = [
     status: "Exploring",
     description:
       "Friends on different music services still can't share a playlist the other person can play. ShareList is the layer in the middle — matching tracks, not playing them.",
-    thumbnail: "/projects/sharelist-thumb.jpg",
+    thumbnail: "/projects/sharelist-thumb.png",
     hero: "/projects/sharelist-hero.jpg",
     shots: [
       {
@@ -228,13 +228,42 @@ const projects: Project[] = [
     ],
   },
   {
-    slug: "more-on-the-way",
-    title: "More on the way",
-    status: "Researching",
+    slug: "mergerai",
+    title: "MergerAI",
+    status: "Building",
     description:
-      "Not everything on the desk is ready to write about. This space stays open for whatever comes next.",
-    thumbnail: null,
-    comingSoon: true,
+      "Fractional CTO for the AI platform that helps boutique investment banks and business brokers cut CIM production from weeks to hours.",
+    thumbnail: "/projects/mergerai-thumb.png",
+    hero: "/projects/mergerai.png",
+    shots: [
+      {
+        src: "/projects/mergerai.png",
+        alt: "MergerAI — Confidential Information Memorandum product shot",
+        label: "The product",
+        width: 1024,
+        height: 677,
+      },
+    ],
+    story: [
+      "MergerAI is a SOC 2-compliant workspace for lean M&A teams — diligence request lists, a data room that organizes itself, deal Q&A in plain English, and AI-generated CIM drafts. Boutique banks and business brokers are the audience.",
+      "We're in as fractional CTO. The product runs on AWS serverless. The work is security and architecture judgment, plus the harder part: helping a company that has been one strong individual contributor become a distributed team that can ship without everything living in one head.",
+      "That includes rewiring how the work gets specified and built — AI-native, spec-driven development instead of tribal knowledge and ad-hoc tickets. The goal is a team that can grow without the architecture or the process collapsing under the next hire.",
+    ],
+    demonstrates: [
+      {
+        title: "Security where the data is sensitive",
+        body: "Deal files and CIMs are the product. SOC 2 isn't a badge on the marketing site — it's a constraint on how the stack is designed and how access is governed.",
+      },
+      {
+        title: "Architecture that can outlive one person",
+        body: "Serverless on AWS is fine. The job is making sure the shape of the system, the boundaries, and the operational habits survive the next few hires.",
+      },
+      {
+        title: "From IC to team",
+        body: "Hiring and process are part of the technical work. Spec-driven, AI-native workflows so the product isn't stuck in one developer's context window.",
+      },
+    ],
+    stack: ["AWS", "Serverless", "SOC 2"],
   },
 ];
 
